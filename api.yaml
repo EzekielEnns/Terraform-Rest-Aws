@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: Example Rest API
+  description: my api
+paths:
+  "/health/{name}":
+    get:
+      x-amazon-apigateway-integration:
+        uri: "${health}"
+        httpMethod: "POST"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+      parameters:
+        - name:
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+components:
+  schemas:
+    Message:
+      type: object
+      properties:
+        message:
+          type: string
